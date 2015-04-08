@@ -1,0 +1,35 @@
+{
+  "name": "gulp-oss",
+  "version": "0.0.1",
+  "description": "aliyun oss client for gulp plugin",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com:wefound/gulp-oss.git"
+  },
+  "engines": {
+    "node": "*"
+  },
+  "dependencies": {
+    "gulp-util": "~2.2.9",
+    "minimatch": "^2.0.4",
+    "moment": "~2.7.0",
+    "through2": "~0.4.0",
+    "aliyun-sdk": "~1.3.5"
+  },
+  "keywords": [
+    "gulp",
+    "plugin",
+    "aliyun",
+    "oss"
+  ],
+  "author": "junqiang",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wefound/gulp-oss/issues"
+  },
+  "homepage": "https://github.com/wefound/gulp-oss"
+}
