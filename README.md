@@ -19,7 +19,7 @@ gulp.task('oss', function(){
     return gulp.src(['./js/**/*']).pipe(oss(options));
 });
 
-```
+``` bash
 cd /path/to/gulpfile.js/
 gulp oss
 [14:50:59] Using gulpfile ~/path/to/gulpfile.js
