@@ -1,4 +1,6 @@
 // PLUGIN_NAME: gulp-oss
+const PLUGIN_NAME = 'gulp-oss';
+
 var path = require('path');
 var through2 = require('through2');
 var PluginError = require('gulp-util').PluginError;
@@ -6,57 +8,61 @@ var colors = require('gulp-util').colors;
 var log = require('gulp-util').log;
 var ALY = require('aliyun-sdk');
 var Moment = require('moment');
-var Q = require('q');
-var fs = require('fs')
-var util = require('util')
-var crypto = require('crypto')
-var minimatch = require('minimatch')
-
-var uploadedCount = 0;//上传文件数量
-
 
 function oss(option) {
-    option = option || {};
-    var oss = new ALY.OSS({
+    if (!option) {
+        throw new PluginError(PLUGIN_NAME, 'Missing option!');
+    }
+    if(!option.bucket){
+        throw new PluginError(PLUGIN_NAME, 'Missing option.bucket!');
+    }
+
+    var ossClient = new ALY.OSS({
         accessKeyId: option.accessKeyId,
         secretAccessKey: option.secretAccessKey,
         endpoint: option.endpoint,
         apiVersion: option.apiVersion
     });
-    // creating a stream through which each file will pass
-    var transformFunction = function(file, encoding, callback) {
-        var that = this;
-        var isIgnore = false;
-        var filePath = path.relative(file.base, file.path);
-        // do whatever necessary to process the file
-        if (file.isNull()) {
-            this.push(file);
-            return callback();
-        }
-        option.ignore.forEach(function(item) {
-            if (minimatch(filePath, item)) isIgnore = true;
-        })
-        if (isIgnore) return next();
-        var fileKey = option.dir + ((!option.dir || option.dir[option.dir.length - 1]) === '/' ? '' : '/') + (option.versioning ? version + '/' : '') + filePath;
 
-        console.log(fileKey);
-        if (file.isBuffer()) {
+    var version = Moment().format('YYMMDDHHmm');
 
+    return through2.obj(function (file, enc, cb) {
+        if(file.isDirectory()) return cb();
+        if(file.isStream()) {
+            this.emit('error', new PluginError(PLUGIN_NAME, 'Streams are not supported!'));
+            return cb();
         }
-        if (file.isStream()) {
-
-        }
-        // just pipe data next, or just do nothing to process file later in flushFunction
-        // never forget callback to indicate that the file has been processed.
+        var getFileKey = function(){
+            return option.prefix
+                + ((!option.prefix || option.prefix[option.prefix.length - 1]) === '/' ? '' : '/')
+                + (option.versioning ? version + '/' : '')
+                + path.relative(file.base, file.path);
+        };
+        var uploadFile = function(fileKey){
+            ossClient.putObject({
+                    Bucket: option.bucket,
+                    Key: fileKey,
+                    Body: file.contents,
+                    AccessControlAllowOrigin: '',
+                    ContentType: 'text/plain',
+                    CacheControl: 'no-cache',
+                    ContentDisposition: '',
+                    ContentEncoding: 'utf-8',
+                    ServerSideEncryption: 'AES256',
+                    Expires: Moment().unix()
+                }, function (err, data) {
+                    if (err) {
+                        log('ERR:', colors.red(fileKey + "\t" + err.code));
+                    }else{
+                        log('OK:', colors.green(fileKey));
+                    }
+                }
+            );
+        };
+        uploadFile(getFileKey());
         this.push(file);
-        callback();
-    };
-    var flushFunction = function(callback) { // just pipe data next, just callback to indicate that the stream's over
-        this.push(something);
-        callback();
-    }
-    return through2(transformFunction, flushFunction);
-};
+        return cb();
+    });
+}
 
-// exporting the plugin
 module.exports = oss;
