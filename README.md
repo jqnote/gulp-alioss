@@ -1,10 +1,14 @@
 # gulp-oss
 Aliyun Oss Client for Gulp
 
-###DEMO
+### Install
+``` bash
+npm install gulp-alioss
+```
+### DEMO
 ``` node
 var gulp = require('gulp');
-var oss = require('gulp-oss');
+var oss = require('gulp-alioss');
 gulp.task('oss', function(){
     var options = {
         accessKeyId: '********',
@@ -20,7 +24,7 @@ gulp.task('oss', function(){
     return gulp.src(['./js/**/*']).pipe(oss(options));
 });
 ```
-###操作结果
+### 操作结果
 
 ``` bash
 cd /path/to/gulpfile.js/
@@ -30,7 +34,6 @@ gulp oss
 [14:50:59] Finished 'oss' after *** ms
 [14:50:59] OK: assets/a.js
 [14:50:59] OK: assets/b/a.js
-[14:50:59] ERR: assets/b/c.js NetworkingError
 ....
 ```
 
