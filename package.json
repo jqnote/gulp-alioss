@@ -1,14 +1,14 @@
 {
-  "name": "gulp-oss",
+  "name": "gulp-alioss",
   "version": "0.1.0",
-  "description": "aliyun oss client for gulp plugin",
+  "description": "A plugin for Gulp that uploads files to Aliyun OSS",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com:wefound/gulp-oss.git"
+    "url": "https://github.com:wefound/gulp-alioss.git"
   },
   "engines": {
     "node": "*"
@@ -27,10 +27,10 @@
     "aliyun",
     "oss"
   ],
-  "author": "junqiang",
+  "author": "junqiang <mail@junqiang.wang> (http://junqiang.wang)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/wefound/gulp-oss/issues"
+    "url": "https://github.com/wefound/gulp-alioss/issues"
   },
-  "homepage": "https://github.com/wefound/gulp-oss"
+  "homepage": "https://github.com/wefound/gulp-alioss"
 }
