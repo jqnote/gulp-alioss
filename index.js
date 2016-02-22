@@ -39,7 +39,7 @@ function oss(option) {
         }
         var getFileKey = function(){
             return option.prefix
-                + ((!option.prefix || option.prefix[option.prefix.length - 1]) === '/' ? '' : '/')
+                + ((!option.prefix || (option.prefix[option.prefix.length - 1]) === '/') ? '' : '/')
                 + (option.versioning ? version + '/' : '')
                 + path.relative(file.base, file.path);
         };
