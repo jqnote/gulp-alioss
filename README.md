@@ -15,7 +15,7 @@ gulp.task('oss', function(){
         secretAccessKey: '*********',
         endpoint: 'http://oss-cn-***.aliyuncs.com',
         apiVersion: '2013-10-15',
-        prefix: 'assets/js',
+        prefix: 'assets/js', //for no prefix: prefix: ''
         bucket: 'test'
     };
     //./js/a.js -> <prefix>/a.js
