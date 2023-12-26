@@ -1,6 +1,8 @@
 # gulp-oss
 Aliyun Oss Client for Gulp
 
+v1.0.1
+
 ### Install
 ``` bash
 npm install gulp-alioss
